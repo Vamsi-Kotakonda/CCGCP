@@ -1,0 +1,46 @@
+ACM:
+=====
+Search ACM --> select certificate manager 
+1. certificate request 
+2. click on request public certificate 
+3. Give domain name as redbus.com
+                       *.redbus.com
+4. select DNS validation 
+5. click on Request 
+
+==============
+6. Go to redbus.com acm ---> go down 
+7. copy cname name --- go to Route53 --> add CNAME record ---> add name in name section 
+   copy cname value --> go to Route53 --> add values section 
+
+8 We use redbus.com ACM certificate in ELB 
+
+
+
+==========================================
+Buy SSL certificate from vendors (Digicert)
+
+1. generate CSR ( Certificate Signing Request)
+   
+   sudo yum install openssl
+   openssl req -new -newkey rsa:2048 -nodes -keyout example.com.key -out example.com.csr
+
+2. Send CSR certificate to Digicert vendors 
+3. Domain validation by Digicert
+4. They will sent .crt and .ca file 
+
+ SSL configuere in EC2 server (https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
+
+ <VirtualHost 192.168.0.1:443>
+    DocumentRoot /var/www/html2
+    ServerName www.yourdomain.com
+        SSLEngine on
+        SSLCertificateFile /path/to/your_domain_name.crt
+        SSLCertificateKeyFile /path/to/your_private.key
+        SSLCertificateChainFile /path/to/DigiCertCA.crt
+    </VirtualHost>
+
+
+
+
+
